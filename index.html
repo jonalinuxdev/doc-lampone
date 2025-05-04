@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lampone - Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.7.2/css/all.css">
+  <link rel="icon" type="image/png" href="img/logo.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="fonts.css">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+  <header class="main-header">
+  <div class="logo-area">
+    <img src="img/logo.png" alt="Lampone Logo" class="site-logo">
+    <span class="site-title">lampone</span>
+  </div>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="#what-is-lampone">Overview</a></li>
+      <li><a href="#core-features">Features</a></li>
+      <li><a href="#use-cases">Use Cases</a></li>
+      <li><a href="#live-demo-repository">Demo</a></li>
+      <li><a href="#quick-start">Start</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+  <div class="layout-container">
+    <main class="main-content">
+      <div class="container-box">
+        <h1 id="what-is-lampone">What is Lampone?</h1>
+        <p><strong>Lampone</strong> is an advanced, browser-based IPTV media player designed to offer a fully client-side solution for streaming and organizing television content using standard <code>.m3u</code> and <code>.m3u8</code> playlists. It is built with a strong focus on usability, speed, compatibility, and transparency.</p>
+
+        <p>The project is ideal for individuals, organizations, or broadcasters who want a modern and modular interface to deliver live or on-demand TV channels without depending on proprietary apps or heavy backend systems. Lampone runs entirely in the browser and is compatible with any device supporting HTML5 and MediaSource Extensions.</p>
+
+        <!-- DEMO SCREENSHOT -->
+        <div style="text-align: center; margin: 2em 0;">
+          <img src="img/screenshot.png" alt="Lampone UI Screenshot" style="max-width: 100%; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+          <p style="font-size: 14px; color: #8b949e; margin-top: 0.5em;">▲ Example of Lampone running a sample M3U playlist with quality selection, flags, and EPG interface</p>
+        </div>
+
+        <h2 id="core-features">Core Features</h2>
+        <ul>
+          <li><strong>Zero-Server Architecture:</strong> Everything happens in the client’s browser—no backend, no database.</li>
+          <li><strong>Instant Channel Loading:</strong> Upload or link playlists, and Lampone automatically parses, validates, and renders channels grouped by country or content category.</li>
+          <li><strong>Persistent User Experience:</strong> All user data (last loaded playlists, selected groups, etc.) is stored in <code>localStorage</code> so the environment is restored on refresh or return visits.</li>
+          <li><strong>Real-Time Filtering:</strong> Built-in search bar lets users find channels instantly by name or group.</li>
+          <li><strong>Intelligent Group Navigation:</strong> Channels are classified by the <code>group-title</code> tag and accessible through flag icons and tags in a right-side scrollable menu.</li>
+          <li><strong>HLS Adaptive Streaming:</strong> Uses <strong>HLS.js</strong> to provide bufferless, high-quality playback with automatic resolution scaling based on bandwidth and playback stats.</li>
+          <li><strong>Program Guide (EPG):</strong> Integrates XMLTV data sources and dynamically matches current/next programs via <code>tvg-id</code> or <code>tvg-name</code>.</li>
+          <li><strong>Clear User Controls:</strong> One-click reset to wipe stored data and return the app to its default state.</li>
+        </ul>
+
+        <h2 id="technological-stack">Technological Stack</h2>
+        <ul>
+          <li><strong>HTML5 & CSS3:</strong> Responsive UI using semantic HTML and custom CSS grid/flexbox layout.</li>
+          <li><strong>JavaScript:</strong> Core application logic with dynamic DOM rendering, event handling, and state management.</li>
+          <li><strong>HLS.js:</strong> Embedded for seamless .m3u8 streaming across non-native browsers.</li>
+          <li><strong>EPG Engine:</strong> XML parsing, matching, and rendering handled via <code>epg.js</code>.</li>
+          <li><strong>Playlist Engine:</strong> Smart parsing and URL validation from local files and remote sources via <code>scripts.js</code>.</li>
+        </ul>
+
+        <h2 id="use-cases">Use Cases</h2>
+        <p>Lampone can be used in a wide variety of contexts:</p>
+        <ul>
+          <li><strong>Home Media Centers:</strong> Serve your own IPTV playlists locally for household viewing.</li>
+          <li><strong>Hospitality:</strong> Embed a custom version for hotel or in-room streaming menus.</li>
+          <li><strong>Newsrooms:</strong> Create curated channel boards for internal editorial use.</li>
+          <li><strong>Education:</strong> Load educational livestreams or remote learning broadcasts.</li>
+          <li><strong>Testing:</strong> A perfect sandbox for testing and benchmarking HLS streams.</li>
+        </ul>
+
+        <h2 id="browser-compatibility">Browser Compatibility</h2>
+        <p>Lampone relies on the <strong>MediaSource Extensions API</strong> and HTML5 <code>&lt;video&gt;</code> support for playback. It supports modern browsers that can decode <code>video/mp4</code> MIME types using HLS.js.</p>
+        <ul>
+          <li>✔ Chrome 39+ (Android & Desktop)</li>
+          <li>✔ Firefox 41+ (Android), 42+ (Desktop)</li>
+          <li>✔ Microsoft Edge (Windows 10+)</li>
+          <li>✔ Safari 9+ (macOS), Safari iPadOS 13+, Safari iOS 17.1+ (via MMS)</li>
+        </ul>
+        <p><span style="color:red;" ><i class="fa-duotone fa-solid fa-xmark-large"></i></span> Browsers without MediaSource or native HLS support (e.g. old Internet Explorer, some embedded webviews) are not supported.</p>
+        <p><strong>Tip:</strong> Use feature detection to fall back to native playback when possible (e.g. on Safari).</p>
+        <p>Refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaSource" target="_blank">MDN MediaSource compatibility matrix</a>.</p>
+
+        <h2 id="audio-video-codecs">Audio/Video Codecs</h2>
+        <p>Lampone supports all codecs compatible with HLS.js, including:</p>
+        <ul>
+          <li><strong>Video:</strong> H.264 (AVC), H.265 (HEVC, in fmp4), VP9</li>
+          <li><strong>Audio:</strong> AAC, MP3 (MPEG-1/2 Audio Layer III), AC-3 (Dolby Digital)</li>
+          <li><strong>Containers:</strong> MPEG-TS, fMP4, AAC-only, MPEG Audio streams</li>
+        </ul>
+        <p>HLS.js transmuxes these formats into MP4 using Web Workers when available, ensuring compatibility across browsers.</p>
+
+        <h2 id="how-lampone-works">How Lampone Works</h2>
+        <p>Once a user loads a playlist, Lampone parses it line-by-line, extracting metadata such as channel name, logo, group-title, and stream URL. This data is organized into internal structures that feed the sidebar and the player. If EPG is enabled, it attempts to match each stream to its program guide entry and displays Now/Next info under the video element.</p>
+
+        <p>Playback relies on HLS.js, which loads the video segments in chunks, assembles them into a continuous buffer, and handles playback logic. Users can toggle stream quality manually if alternate levels are available, or let Lampone manage it based on connection health and device resolution.</p>
+
+        <h2 id="live-demo-repository">Live Demo & Repository</h2>
+        <ul>
+          <li><i class="fa-brands fa-square-gitlab"></i> <a href="https://gitlab.com/lampone-dev/lampone-ui" target="_blank">GitLab Repository</a> — Source code, issues, and contributions.</li>
+          <li><i class="fa-brands fa-square-gitlab"></i> <a href="https://lampone-ui-4243f6.gitlab.io" target="_blank">Live Demo</a> — Fully working in-browser interface.</li>
+        </ul>
+            <div class="m3u-playlist-section">
+          <h2>Global Free IPTV Playlist</h2>
+          <p>
+            In addition to personal playlists, you can connect Lampone with a free public IPTV source offering over <strong>12,000 channels</strong> globally.
+            This list is regularly updated and grouped by country and content category (News, Sport, Music, Entertainment, etc.).
+
+          </p>
+          <p><i class="fa-brands fa-github"></i> <a href="https://github.com/jonalinuxdev/auto-m3u-updater">World M3U list</a> — Free-Tv list repository.</p>
+
+             <span style="color:orange;" > <i class="fa-duotone fa-solid fa-triangle-exclamation"></i></span> Many channels are geo-blocked and accessible only from specific regions. To bypass these restrictions, we recommend using a reliable <strong>VPN</strong> to simulate the appropriate location.
+          </p>
+
+        <div class="m3u-playlist-section">
+          <h2 id="playlist-format">Supported M3U Playlist Format</h2>
+          <p>Each playlist must follow the standard <code>#EXTM3U</code> format. Here's a valid example:</p>
+          <pre><code>#EXTM3U
+#EXTINF:-1 tvg-id="Big Buck Bunny" tvg-name="Big Buck Bunny" tvg-logo="" group-title="Sample Videos",Big Buck Bunny
+https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8</code></pre>
+          <p>The player uses <code>tvg-id</code> or <code>tvg-name</code> to match EPG data, and <code>group-title</code> to organize channels in the sidebar.</p>
+        </div>
+
+
+        <h2 id="quick-start">Quick Start</h2>
+        <pre><code>git clone https://gitlab.com/lampone-dev/lampone-ui.git
+cd lampone-ui
+python -m http.server 8000</code></pre>
+        <p>Or use <code>http-server</code> (Node.js), XAMPP, WAMP, or any HTTP-capable server.</p>
+
+        <h2 id="license">License</h2>
+        <p>Distributed under the <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPLv3 License</a>. You are free to use, modify, and redistribute it under the same terms.</p>
+
+      </div>
+    </main>
+
+    <aside class="right-sidebar">
+      <nav>
+        <ul class="sidebar-nav">
+          <li><a href="#what-is-lampone">Overview</a></li>
+          <li><a href="#core-features">Features</a></li>
+          <li><a href="#technological-stack">Tech Stack</a></li>
+          <li><a href="#use-cases">Use Cases</a></li>
+          <li><a href="#browser-compatibility">Browser Support</a></li>
+          <li><a href="#audio-video-codecs">Codecs</a></li>
+          <li><a href="#how-lampone-works">Architecture</a></li>
+          <li><a href="#live-demo-repository">Repository</a></li>
+          <li><a href="#quick-start">Quick Start</a></li>
+          <li><a href="#license">License</a></li>
+          <li><a href="#playlist-format">Free IPTV</a></li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+
+  <footer class="main-footer">
+    <p>
+      <span id="year"></span> © lampone - 
+      <a href="https://gitlab.com/lampone-dev" target="_blank"><i class="fa-brands fa-gitlab"></i> GitLab</a> - 
+      <a href="https://www.paypal.com/donate/?hosted_button_id=WTN3XPYNNKRNL" target="_blank" class="donate-link">Donate</a> - 
+      <span class="visite">
+        <i class="fa-duotone fa-solid fa-user"></i> Online 
+        <span id="online"><i class="fa-duotone fa-solid fa-spinner-third fa-spin"></i></span> - 
+        Views <span id="visitors"><i class="fa-duotone fa-solid fa-spinner-third fa-spin"></i></span>
+      </span>
+    </p>
+  </footer>
+  <script src="visits.js"></script>
+  <script src="footer.js"></script>
+</body>
+</html>
